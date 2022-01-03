@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Control player movements.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     Rigidbody m_Rigidbody;
@@ -10,18 +13,26 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
     private int score = 0;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// </summary>
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         speed = speed * 100f;
     }
 
+    /// <summary>
+    /// Update for physics.
+    /// </summary>
     void FixedUpdate()
     {
         PlayerMovement();
     }
 
+    /// <summary>
+    /// Handles player movements.
+    /// </summary>
     void PlayerMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -30,7 +41,9 @@ public class PlayerController : MonoBehaviour
         m_Rigidbody.AddForce(playerMovement);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Update is called once per frame
+    /// </summary>
     void Update()
     {
         if (health == 0)
@@ -40,6 +53,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Detect if current game object trigger another game object.
+    /// </summary>
+    /// <param name="other">Other game object.</param>
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Pickup")
