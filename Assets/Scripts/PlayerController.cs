@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Control player movements.
@@ -12,6 +13,10 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public int health = 5;
     private int score = 0;
+    public Text scoreText;
+    public Text healthText;
+    public Text winLoseText;
+    public Image winLoseImage;
 
     void Start()
     {
@@ -34,29 +39,66 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("menu");
+        }
+
         if (health == 0)
         {
-            Debug.Log("<color=#DE4B00>Game Over!</color>");
-            SceneManager.LoadScene("maze");
+            SetLoseText();
+            StartCoroutine(LoadScene(3));
         }
     }
 
-    public void OnTriggerEnter(Collider other)
+    IEnumerator LoadScene(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        SceneManager.LoadScene("maze");
+    }
+
+    void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Pickup")
         {
             score += 1;
-            Debug.Log($"<color=#FFFF00>Score: {score}</color>");
+            SetScoreText();
             Destroy(other.gameObject);
         }
         if (other.tag == "Trap")
         {
             health -= 1;
-            Debug.Log($"<color=#FF0000>Health {health}</color>");
+            SetHealthText();
         }
         if (other.tag == "Goal")
         {
-            Debug.Log("<color=#00FF00>You win!</color>");
+            SetWinText();
         }
+    }
+
+    void SetScoreText()
+    {
+        scoreText.text = $"Score: {score}";
+    }
+
+    void SetHealthText()
+    {
+        healthText.text = $"Health: {health}";
+    }
+
+    void SetWinText()
+    {
+        winLoseText.color = Color.black;
+        winLoseText.text = "You Win!";
+        winLoseImage.color = Color.green;
+        winLoseImage.gameObject.SetActive(true);
+    }
+
+    void SetLoseText()
+    {
+        winLoseText.color = Color.white;
+        winLoseText.text = "Game Over!";
+        winLoseImage.color = Color.red;
+        winLoseImage.gameObject.SetActive(true);
     }
 }
