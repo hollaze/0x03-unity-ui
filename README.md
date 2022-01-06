@@ -14,6 +14,7 @@
 - How to set and change material colors with scripts
 - What are common accessibility concepts to consider
 
-### When the project start
+### Before launching the project
 
-> There is a problem with the Unity UI package, you may need to remove and reinstall it
+> You may need to close your IDE otherwise, it may cause a 'locked open'
+error and will cause some packages not to be loaded correctly
