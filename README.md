@@ -13,3 +13,7 @@
 - What the alpha value of a color is
 - How to set and change material colors with scripts
 - What are common accessibility concepts to consider
+
+### When the project start
+
+> There is a problem with the Unity UI package, you may need to remove and reinstall it
